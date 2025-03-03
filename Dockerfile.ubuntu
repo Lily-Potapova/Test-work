@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-## Установка samtools (версия 1.21)
+# Установка samtools (версия 1.21)
 RUN mkdir -p $SOFT/samtools-1.21 && \
     cd $SOFT/samtools-1.21 && \
     wget https://github.com/samtools/samtools/releases/download/1.21/samtools-1.21.tar.bz2 && \
@@ -36,7 +36,7 @@ RUN mkdir -p $SOFT/samtools-1.21 && \
     make install && \
     rm -rf $SOFT/samtools-1.21/samtools-1.21.tar.bz2
 
-## Установка htslib (версия 1.21)
+# Установка htslib (версия 1.21)
 RUN mkdir -p $SOFT/htslib-1.21 && \
     cd $SOFT/htslib-1.21 && \
     wget https://github.com/samtools/htslib/releases/download/1.21/htslib-1.21.tar.bz2 && \
@@ -47,7 +47,7 @@ RUN mkdir -p $SOFT/htslib-1.21 && \
     make install && \
     rm -rf $SOFT/htslib-1.21/htslib-1.21.tar.bz2
 
-## Установка libdeflate (версия 1.23)
+# Установка libdeflate (версия 1.23)
 RUN mkdir -p $SOFT/libdeflate-1.23 && \
     cd $SOFT/libdeflate-1.23 && \
     wget https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.23.tar.gz && \
@@ -57,7 +57,7 @@ RUN mkdir -p $SOFT/libdeflate-1.23 && \
     make install && \
     rm -rf $SOFT/libdeflate-1.23/v1.23.tar.gz
 
-## Установка bcftools (версия 1.21)
+# Установка bcftools (версия 1.21)
 RUN mkdir -p $SOFT/bcftools-1.21 && \
     cd $SOFT/bcftools-1.21 && \
     wget https://github.com/samtools/bcftools/releases/download/1.21/bcftools-1.21.tar.bz2 && \
@@ -68,7 +68,7 @@ RUN mkdir -p $SOFT/bcftools-1.21 && \
     make install && \
     rm -rf $SOFT/bcftools-1.21/bcftools-1.21.tar.bz2
 
-## Установка vcftools (версия 0.1.16)
+# Установка vcftools (версия 0.1.16)
 RUN mkdir -p $SOFT/vcftools-0.1.16 && \
     cd $SOFT/vcftools-0.1.16 && \
     wget https://github.com/vcftools/vcftools/releases/download/v0.1.16/vcftools-0.1.16.tar.gz && \
@@ -78,3 +78,11 @@ RUN mkdir -p $SOFT/vcftools-0.1.16 && \
     make -j$(nproc) && \
     make install && \
     rm -rf $SOFT/vcftools-0.1.16/vcftools-0.1.16.tar.gz
+
+# Настройка переменных окружения
+ENV PATH="$SOFT/samtools-1.21/bin:$SOFT/htslib-1.21/bin:$SOFT/bcftools-1.21/bin:$SOFT/libdeflate-1.23/bin:$SOFT/vcftools-0.1.16/bin:$PATH"
+ENV SAMTOOLS="$SOFT/samtools-1.21/bin/samtools"
+ENV HTSLIB="$SOFT/htslib-1.21/bin/htslib"
+ENV BCFTOOLS="$SOFT/bcftools-1.21/bin/bcftools"
+ENV LIBDEFLATE="$SOFT/libdeflate-1.23/bin/libdeflate"
+ENV VCFTOOLS="$SOFT/vcftools-0.1.16/bin/vcftools"
