@@ -35,3 +35,14 @@ RUN mkdir -p $SOFT/samtools-1.21 && \
     make -j$(nproc) && \
     make install && \
     rm -rf $SOFT/samtools-1.21/samtools-1.21.tar.bz2
+
+## Установка htslib (версия 1.21)
+RUN mkdir -p $SOFT/htslib-1.21 && \
+    cd $SOFT/htslib-1.21 && \
+    wget https://github.com/samtools/htslib/releases/download/1.21/htslib-1.21.tar.bz2 && \
+    tar -xjf htslib-1.21.tar.bz2 && \
+    cd htslib-1.21 && \
+    ./configure --prefix=$SOFT/htslib-1.21 && \
+    make -j$(nproc) && \
+    make install && \
+    rm -rf $SOFT/htslib-1.21/htslib-1.21.tar.bz2
