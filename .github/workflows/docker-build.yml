@@ -1,0 +1,35 @@
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - main  # Запускать сборку при пуше в ветку main
+  pull_request:
+    branches:
+      - main  # Запускать сборку при пул-реквесте в ветку main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Используем виртуальную машину с Ubuntu
+
+    steps:
+      # Шаг 1: Клонируем репозиторий
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Шаг 2: Устанавливаем Docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Шаг 3: Собираем Docker-образ
+      - name: Build Docker image
+        run: docker build -t my-bioinformatics-image .
+
+      # Шаг 4: Включаем кэширование слоев Docker
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
