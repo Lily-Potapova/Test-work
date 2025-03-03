@@ -11,3 +11,16 @@ ENV SOFT=/soft
 
 # Создаем директорию, указанную в $SOFT
 RUN mkdir -p $SOFT
+
+# Устанавливаем общие пакеты через apt
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    wget \
+    curl \
+    git \
+    zlib1g-dev \
+    libbz2-dev \
+    liblzma-dev \
+    libcurl4-gnutls-dev \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
