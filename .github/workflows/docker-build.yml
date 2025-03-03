@@ -23,7 +23,7 @@ jobs:
 
       # Шаг 3: Собираем Docker-образ
       - name: Build Docker image
-        run: docker build -t my-bioinformatics-image .
+        run: docker build -t my-bioinformatics-image -f Dockerfile.ubuntu .
 
       # Шаг 4: Включаем кэширование слоев Docker
       - name: Cache Docker layers
