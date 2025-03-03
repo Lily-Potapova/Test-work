@@ -86,3 +86,8 @@ ENV HTSLIB="$SOFT/htslib-1.21/bin/htslib"
 ENV BCFTOOLS="$SOFT/bcftools-1.21/bin/bcftools"
 ENV LIBDEFLATE="$SOFT/libdeflate-1.23/bin/libdeflate"
 ENV VCFTOOLS="$SOFT/vcftools-0.1.16/bin/vcftools"
+
+# Очистка образа
+RUN apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
