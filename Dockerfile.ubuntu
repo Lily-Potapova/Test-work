@@ -67,3 +67,14 @@ RUN mkdir -p $SOFT/bcftools-1.21 && \
     make -j$(nproc) && \
     make install && \
     rm -rf $SOFT/bcftools-1.21/bcftools-1.21.tar.bz2
+
+## Установка vcftools (версия 0.1.16)
+RUN mkdir -p $SOFT/vcftools-0.1.16 && \
+    cd $SOFT/vcftools-0.1.16 && \
+    wget https://github.com/vcftools/vcftools/releases/download/v0.1.16/vcftools-0.1.16.tar.gz && \
+    tar -xzf vcftools-0.1.16.tar.gz && \
+    cd vcftools-0.1.16 && \
+    ./configure --prefix=$SOFT/vcftools-0.1.16 && \
+    make -j$(nproc) && \
+    make install && \
+    rm -rf $SOFT/vcftools-0.1.16/vcftools-0.1.16.tar.gz
