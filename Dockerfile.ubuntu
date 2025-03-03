@@ -9,3 +9,5 @@ LABEL description="Этот образ содержит samtools (версия 1
 # Устанавливаем переменную окружения $SOFT
 ENV SOFT=/soft
 
+# Создаем директорию, указанную в $SOFT
+RUN mkdir -p $SOFT
