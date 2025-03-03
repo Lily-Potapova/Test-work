@@ -1,2 +1,7 @@
 # Используем официальный образ Ubuntu 22.04
 FROM ubuntu:22.04
+
+# Указываем кто поддерживает образ, его версию и содержание
+LABEL maintainer="lily.potapova.00@mail.ru"
+LABEL version="1.0"
+LABEL description="Этот образ содержит samtools (версия 1.21), htslib (версия 1.21), libdeflate (версия 1.23), bcftools (версия 1.21), vcftools (версия 0.1.16)."
