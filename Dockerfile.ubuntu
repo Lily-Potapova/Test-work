@@ -56,3 +56,14 @@ RUN mkdir -p $SOFT/libdeflate-1.23 && \
     make -j$(nproc) && \
     make install && \
     rm -rf $SOFT/libdeflate-1.23/v1.23.tar.gz
+
+## Установка bcftools (версия 1.21)
+RUN mkdir -p $SOFT/bcftools-1.21 && \
+    cd $SOFT/bcftools-1.21 && \
+    wget https://github.com/samtools/bcftools/releases/download/1.21/bcftools-1.21.tar.bz2 && \
+    tar -xjf bcftools-1.21.tar.bz2 && \
+    cd bcftools-1.21 && \
+    ./configure --prefix=$SOFT/bcftools-1.21 && \
+    make -j$(nproc) && \
+    make install && \
+    rm -rf $SOFT/bcftools-1.21/bcftools-1.21.tar.bz2
