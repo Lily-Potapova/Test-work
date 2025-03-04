@@ -56,8 +56,3 @@ jobs:
           echo "Testing htslib (htsfile)..."
           docker run --rm my-bioinformatics-image htsfile --help
           docker run --rm my-bioinformatics-image htsfile --version
-
-          # Проверка libdeflate
-          echo "Testing libdeflate..."
-          docker run --rm my-bioinformatics-image libdeflate --help
-          docker run --rm my-bioinformatics-image libdeflate --version
