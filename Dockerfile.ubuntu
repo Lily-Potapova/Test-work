@@ -28,7 +28,6 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     autoconf \
     automake \
-    libdeflate \
     && rm -rf /var/lib/apt/lists/*
 
 # Установка samtools (версия 1.21)
@@ -52,6 +51,17 @@ RUN mkdir -p $SOFT/htslib-1.21 && \
     make -j$(nproc) && \
     make install && \
     rm -rf $SOFT/htslib-1.21/htslib-1.21.tar.bz2
+
+# Установка libdeflate (версия 1.23)
+RUN mkdir -p $SOFT/libdeflate-1.23 && \
+    cd $SOFT/libdeflate-1.23 && \
+    wget https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.23.tar.gz && \
+    tar -xzf v1.23.tar.gz && \
+    cd libdeflate-1.23 && \
+    cmake -B build && \
+    cmake --build build --parallel $(nproc) && \
+    cmake --install build && \
+    rm -rf $SOFT/libdeflate-1.23/v1.23.tar.gz
 
 # Установка bcftools (версия 1.21)
 RUN mkdir -p $SOFT/bcftools-1.21 && \
