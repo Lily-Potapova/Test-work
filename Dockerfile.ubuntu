@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y \
     libncurses5-dev \
     libcurl4-gnutls-dev \
     libssl-dev \
+    cmake \
     && rm -rf /var/lib/apt/lists/*
 
 # Установка samtools (версия 1.21)
@@ -53,9 +54,10 @@ RUN mkdir -p $SOFT/libdeflate-1.23 && \
     cd $SOFT/libdeflate-1.23 && \
     wget https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.23.tar.gz && \
     tar -xzf v1.23.tar.gz && \
-    cd $(find . -maxdepth 1 -type d -name "libdeflate-*") && \
-    make -j$(nproc) && \
-    make install && \
+    cd libdeflate-1.23 && \
+    cmake -B build && \
+    cmake --build build --parallel $(nproc) && \
+    cmake --install build && \
     rm -rf $SOFT/libdeflate-1.23/v1.23.tar.gz
 
 # Установка bcftools (версия 1.21)
