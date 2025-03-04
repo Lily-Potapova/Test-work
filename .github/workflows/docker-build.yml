@@ -33,3 +33,31 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
+
+      # Шаг 5: Запускаем контейнер и проверяем установленные программы
+      - name: Run Docker container and test installed tools
+        run: |
+          # Проверка samtools
+          echo "Testing samtools..."
+          docker run --rm my-bioinformatics-image samtools --help
+          docker run --rm my-bioinformatics-image samtools --version
+
+          # Проверка bcftools
+          echo "Testing bcftools..."
+          docker run --rm my-bioinformatics-image bcftools --help
+          docker run --rm my-bioinformatics-image bcftools --version
+
+          # Проверка vcftools
+          echo "Testing vcftools..."
+          docker run --rm my-bioinformatics-image vcftools --help
+          docker run --rm my-bioinformatics-image vcftools --version
+
+          # Проверка htslib (htsfile)
+          echo "Testing htslib (htsfile)..."
+          docker run --rm my-bioinformatics-image htsfile --help
+          docker run --rm my-bioinformatics-image htsfile --version
+
+          # Проверка libdeflate
+          echo "Testing libdeflate..."
+          docker run --rm my-bioinformatics-image libdeflate --help
+          docker run --rm my-bioinformatics-image libdeflate --version
