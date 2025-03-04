@@ -25,6 +25,9 @@ RUN apt-get update && apt-get install -y \
     libcurl4-gnutls-dev \
     libssl-dev \
     cmake \
+    pkg-config \
+    autoconf \
+    automake \
     && rm -rf /var/lib/apt/lists/*
 
 # Установка samtools (версия 1.21)
@@ -77,6 +80,7 @@ RUN mkdir -p $SOFT/vcftools-0.1.16 && \
     wget https://github.com/vcftools/vcftools/releases/download/v0.1.16/vcftools-0.1.16.tar.gz && \
     tar -xzf vcftools-0.1.16.tar.gz && \
     cd vcftools-0.1.16 && \
+    ./autogen.sh && \
     ./configure --prefix=$SOFT/vcftools-0.1.16 && \
     make -j$(nproc) && \
     make install && \
