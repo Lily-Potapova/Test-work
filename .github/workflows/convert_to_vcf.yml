@@ -1,0 +1,65 @@
+name: Process FP_SNPs.txt
+
+on:
+  workflow_dispatch:
+
+jobs:
+  process-snps:
+    runs-on: ubuntu-latest  # Используем Ubuntu для выполнения
+
+    steps:
+      # Шаг 1: Клонируем репозиторий
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Шаг 2: Устанавливаем зависимости
+      - name: Set up Bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awk  # Убедимся, что awk установлен
+
+      # Шаг 3: Выполняем преобразование файла
+      - name: Convert FP_SNPs.txt
+        run: |
+          input_file="FP_SNPs.txt"
+          output_file="FP_SNPs_10k_GB38_twoAllelsFormat.tsv"
+
+          # Проверка наличия входного файла
+          if [[ ! -f "$input_file" ]]; then
+              echo "Ошибка: Входной файл $input_file не найден."
+              exit 1
+          fi
+
+          # Обработка файла с помощью awk
+          awk '
+          BEGIN {
+              FS="[ \t]+";
+              print "##fileformat=VCFv4.2";
+              print "#CHROM\tPOS\tID\tallele1\tallele2";
+          }
+          {
+              if ($1 ~ /^#/) next;
+              if ($2 == 23) next;
+              chrom = "chr" $2;
+              id = "rs" $1;
+              pos = $4;
+              print chrom "\t" pos "\t" id "\t" $5 "\t" $6;
+          }
+          ' "$input_file" > "$output_file"
+
+          # Проверка успешного завершения
+          if [[ $? -eq 0 ]]; then
+              echo "Файл успешно обработан. Результат сохранен в $output_file."
+          else
+              echo "Ошибка при обработке файла."
+              exit 1
+          fi
+
+      # Шаг 4: Сохраняем результат в репозиторий
+      - name: Commit and push results
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add FP_SNPs_10k_GB38_twoAllelsFormat.tsv
+          git commit -m "Automated: Processed FP_SNPs.txt"
+          git push
