@@ -10,15 +10,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-
-    - name: Download GRAF archive
-      run: |
-        curl -L -o GRAF_files.tar.gz -H "User-Agent: Mozilla/5.0" http://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/GetZip.cgi?zip_name=GRAF_files.tar.gz
-   
-    - name: Check file type
-      run: |
-        file GRAF_files.tar.gz
-
+      
     - name: Extract archive
       run: |
         mkdir -p GRAF_files
