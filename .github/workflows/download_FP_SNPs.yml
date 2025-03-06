@@ -17,7 +17,7 @@ jobs:
         run: cp GrafPkg/data/FP_SNPs.txt .  # Копируем файл в рабочую директорию
 
       - name: Upload FP_SNPs.txt as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: FP_SNPs.txt
           path: FP_SNPs.txt  # Удаляем временные файлы
