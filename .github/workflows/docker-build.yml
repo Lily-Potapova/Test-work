@@ -1,12 +1,6 @@
 name: Docker Build
 
-on:
-  push:
-    branches:
-      - main  # Запускать сборку при пуше в ветку main
-  pull_request:
-    branches:
-      - main  # Запускать сборку при пул-реквесте в ветку main
+workflow_dispatch:
 
 jobs:
   build:
