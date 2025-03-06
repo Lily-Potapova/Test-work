@@ -1,0 +1,20 @@
+name: Download FP_SNPs.txt
+
+on:
+  workflow_dispatch:  # Позволяет запускать workflow вручную через интерфейс
+
+jobs:
+  download:
+    runs-on: ubuntu-latest  
+    steps:
+      - name: Download GrafPkg.tar.gz
+        run: wget https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/Software.cgi\?id\=93 -O GrafPkg.tar.gz
+
+      - name: Extract archive
+        run: tar -xzvf GrafPkg.tar.gz
+
+      - name: Copy FP_SNPs.txt to root directory
+        run: cp GrafPkg/data/FP_SNPs.txt .  # Копируем файл в основную директорию
+
+      - name: Clean up
+        run: rm -rf GrafPkg.tar.gz GrafPkg/  # Удаляем временные файлы
