@@ -13,7 +13,8 @@ jobs:
 
     - name: Download GRAF archive
       run: |
-        curl -o GRAF_files.tar.gz http://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/GetZip.cgi?zip_name=GRAF_files.zip
+      #  curl -o GRAF_files.tar.gz http://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/GetZip.cgi?zip_name=GRAF_files.zip
+        wget -O GRAF_files.tar.gz http://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/GetZip.cgi?zip_name=GRAF_files.tar.gz
     
     - name: Check file type
       run: |
