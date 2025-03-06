@@ -38,7 +38,7 @@ jobs:
 
     - name: Index chromosomes
       run: |
-        for chrom in $(seq 1 22) X Y MT; do
+        for chrom in $(seq 1 22); do
           samtools faidx chr$chrom.fa
         done
 
