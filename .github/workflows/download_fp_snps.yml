@@ -1,4 +1,4 @@
-name: Download and Extract FP_SNPs.txt
+name: Download and Extract FP_SNPs
 
 on:
   workflow_dispatch:  # Позволяет запускать workflow вручную через интерфейс GitHub
