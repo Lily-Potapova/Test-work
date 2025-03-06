@@ -15,9 +15,16 @@ jobs:
       run: |
         curl -o http://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/GetZip.cgi?zip_name=GRAF_files.zip
 
-    - name: Unzip archive
+    - name: Extract archive
       run: |
-        unzip GRAF_files.zip -d GRAF_files
+        mkdir -p GRAF_files
+        tar -xzf GRAF_files.tar.gz -C GRAF_files
+
+    - name: Check downloaded file content
+      run: |
+        file GRAF_files/data/FP_SNPs.txt
+        echo "First 20 lines of the file:"
+        head -n 20 GRAF_files/data/FP_SNPs.txt
 
     - name: Move FP_SNPs.txt to repository root
       run: |
@@ -25,4 +32,8 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add FP_SNPs.txt
+        git commit -m "Add FP_SNPs.txt from GRAF archive"
+        git push
