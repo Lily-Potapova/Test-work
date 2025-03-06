@@ -15,12 +15,9 @@ jobs:
       run: |
         curl -o GRAF_files.tar.gz http://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/GetZip.cgi?zip_name=GRAF_files.zip
     
-    - name: Check if file exists
+    - name: Check file type
       run: |
-        if [ ! -f GRAF_files.tar.gz ]; then
-          echo "Error: File GRAF_files.tar.gz does not exist."
-          exit 1
-        fi
+        file GRAF_files.tar.gz
 
     - name: Extract archive
       run: |
