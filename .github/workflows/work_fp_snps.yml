@@ -15,7 +15,7 @@ jobs:
       run: |
         mkdir -p GRAF_files
         file GRAF_files.tar.gz
-        tar -xzf GRAF_files.tar.gz -C GRAF_files
+        gunzip GRAF_files.tar.gz
 
     - name: Check downloaded file content
       run: |
