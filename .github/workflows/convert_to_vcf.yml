@@ -55,11 +55,9 @@ jobs:
               exit 1
           fi
 
-      # Шаг 4: Сохраняем результат в репозиторий
-      - name: Commit and push results
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add FP_SNPs_10k_GB38_twoAllelsFormat.tsv
-          git commit -m "Automated: Processed FP_SNPs.txt"
-          git push
+   # Шаг 4: Сохраняем результат как артефакт
+   - name: Upload result as artifact
+     uses: actions/upload-artifact@v3
+     with:
+       name: FP_SNPs_10k_GB38_twoAllelsFormat.tsv
+       path: FP_SNPs_10k_GB38_twoAllelsFormat.tsv
