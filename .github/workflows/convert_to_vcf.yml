@@ -55,9 +55,9 @@ jobs:
               exit 1
           fi
 
-   # Шаг 4: Сохраняем результат как артефакт
-   - name: Upload result as artifact
-     uses: actions/upload-artifact@v3
-     with:
-       name: FP_SNPs_10k_GB38_twoAllelsFormat.tsv
-       path: FP_SNPs_10k_GB38_twoAllelsFormat.tsv
+       # Шаг 4: Сохраняем результат как артефакт
+       - name: Upload result as artifact
+         uses: actions/upload-artifact@v3
+         with:
+           name: FP_SNPs_10k_GB38_twoAllelsFormat.tsv
+           path: FP_SNPs_10k_GB38_twoAllelsFormat.tsv
