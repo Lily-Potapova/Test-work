@@ -1,0 +1,28 @@
+name: Download and Extract FP_SNPs.txt
+
+on:
+  workflow_dispatch:  # Позволяет запускать workflow вручную через интерфейс GitHub
+
+jobs:
+  download-extract-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Download GRAF archive
+      run: |
+        curl -o GRAF_files.zip http://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/GetZip.cgi?zip_name=GRAF_files.zip
+
+    - name: Unzip archive
+      run: |
+        unzip GRAF_files.zip -d GRAF_files
+
+    - name: Move FP_SNPs.txt to repository root
+      run: |
+        mv GRAF_files/data/FP_SNPs.txt FP_SNPs.txt
+
+    - name: Commit and push changes
+      run: |
+        git
