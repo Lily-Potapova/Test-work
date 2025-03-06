@@ -13,8 +13,11 @@ jobs:
       - name: Extract archive
         run: tar -xzvf GrafPkg.tar.gz
 
-      - name: Copy FP_SNPs.txt to root directory
-        run: cp GrafPkg/data/FP_SNPs.txt .  # Копируем файл в основную директорию
+      - name: Copy FP_SNPs.txt to working directory
+        run: cp GrafPkg/data/FP_SNPs.txt .  # Копируем файл в рабочую директорию
 
-      - name: Clean up
-        run: rm -rf GrafPkg.tar.gz GrafPkg/  # Удаляем временные файлы
+      - name: Upload FP_SNPs.txt as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: FP_SNPs.txt
+          path: FP_SNPs.txt  # Удаляем временные файлы
