@@ -19,15 +19,15 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y wget samtools
-
+        sudo apt-get install -y wget samtools tar
+        
     - name: Download reference genome
       run: |
-        wget https://gdc.cancer.gov/files/public/file/GRCh38.d1.vd1.fa.gz -O GRCh38.d1.vd1.fa.gz
-
+        wget "https://api.gdc.cancer.gov/data/254f697d-310d-4d7d-a27b-27fbf767a834" -O GRCh38.d1.vd1.tar.gz
+        
     - name: Unpack reference genome
       run: |
-        gunzip GRCh38.d1.vd1.fa.gz
+        tar -xzvf GRCh38.d1.vd1.tar.gz
 
     - name: Split reference genome into chromosomes
       run: |
