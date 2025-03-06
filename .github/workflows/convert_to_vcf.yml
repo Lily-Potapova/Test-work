@@ -38,7 +38,7 @@ jobs:
               print "#CHROM\tPOS\tID\tallele1\tallele2";
           }
           {
-              if ($1 ~ /^#/) next;
+              if ($1 ~ /^rs#/) next;
               if ($2 == 23) next;
               chrom = "chr" $2;
               id = "rs" $1;
