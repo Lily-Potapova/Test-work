@@ -32,7 +32,7 @@ jobs:
     - name: Split reference genome into chromosomes
       run: |
         awk '/^>/ {if (seqlen){print seqlen}; print ;seqlen=0;next; } { seqlen += length($0)}END{print seqlen}' GRCh38.d1.vd1.fa > GRCh38.d1.vd1.fa.chrom.sizes
-        for chrom in $(seq 1 22) X Y MT; do
+        for chrom in $(seq 1 22); do
           samtools faidx GRCh38.d1.vd1.fa chr$chrom > chr$chrom.fa
         done
 
