@@ -1,0 +1,51 @@
+name: Process Reference Genome
+
+on:
+  workflow_dispatch:
+
+jobs:
+  process-genome:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget samtools
+
+    - name: Download reference genome
+      run: |
+        wget https://gdc.cancer.gov/files/public/file/GRCh38.d1.vd1.fa.gz -O GRCh38.d1.vd1.fa.gz
+
+    - name: Unpack reference genome
+      run: |
+        gunzip GRCh38.d1.vd1.fa.gz
+
+    - name: Split reference genome into chromosomes
+      run: |
+        awk '/^>/ {if (seqlen){print seqlen}; print ;seqlen=0;next; } { seqlen += length($0)}END{print seqlen}' GRCh38.d1.vd1.fa > GRCh38.d1.vd1.fa.chrom.sizes
+        for chrom in $(seq 1 22) X Y MT; do
+          samtools faidx GRCh38.d1.vd1.fa chr$chrom > chr$chrom.fa
+        done
+
+    - name: Index chromosomes
+      run: |
+        for chrom in $(seq 1 22) X Y MT; do
+          samtools faidx chr$chrom.fa
+        done
+
+    - name: Upload processed files
+      uses: actions/upload-artifact@v4
+      with:
+        name: processed-genome
+        path: |
+          chr*.fa
+          chr*.fa.fai
