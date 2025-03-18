@@ -16,7 +16,7 @@ jobs:
       - name: Set up Bash
         run: |
           sudo apt-get update
-          sudo apt-get install -y gawk  # Устанавливаем gawk вместо awk
+          sudo apt-get install -y gawk
           
       # Шаг 3: Выполняем преобразование файла
       - name: Convert FP_SNPs.txt
@@ -34,7 +34,6 @@ jobs:
           awk '
           BEGIN {
               FS="[ \t]+";
-              print "##fileformat=VCFv4.2";
               print "#CHROM\tPOS\tID\tallele1\tallele2";
           }
           {
