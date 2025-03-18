@@ -1,0 +1,52 @@
+name: Docker Build
+
+workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Используем виртуальную машину с Ubuntu
+
+    steps:
+      # Шаг 1: Клонируем репозиторий
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Шаг 2: Устанавливаем Docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Шаг 3: Собираем Docker-образ
+      - name: Build Docker image
+        run: docker build -t my-bioinformatics-image -f Dockerfile.ubuntu .
+
+      # Шаг 4: Включаем кэширование слоев Docker
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      # Шаг 5: Запускаем контейнер и проверяем установленные программы
+      - name: Run Docker container and test installed tools
+        run: |
+          # Проверка samtools
+          echo "Testing samtools..."
+          docker run --rm my-bioinformatics-image samtools --help
+          docker run --rm my-bioinformatics-image samtools --version
+
+          # Проверка bcftools
+          echo "Testing bcftools..."
+          docker run --rm my-bioinformatics-image bcftools --help
+          docker run --rm my-bioinformatics-image bcftools --version
+
+          # Проверка vcftools
+          echo "Testing vcftools..."
+          docker run --rm my-bioinformatics-image vcftools --help
+          docker run --rm my-bioinformatics-image vcftools --version
+
+          # Проверка htslib (htsfile)
+          echo "Testing htslib (htsfile)..."
+          docker run --rm my-bioinformatics-image htsfile --help
+          docker run --rm my-bioinformatics-image htsfile --version
