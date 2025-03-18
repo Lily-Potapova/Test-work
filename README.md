@@ -10,20 +10,30 @@
 - **htslib** (версия 1.21) — библиотека для работы с высокопроизводительными sequencing данными.
 - **bcftools** (версия 1.21) — утилиты для работы с VCF/BCF файлами.
 - **vcftools** (версия 0.1.16) — инструменты для работы с VCF файлами.
-- **
+- **convert_to_ref_alt.py** — скрипт для определения референсных и альтернативных аллелей.
+
+## Предподготовка файла
+
+Для предподготовки был создан yml файл, который можно запустить с помощью вкладки Acshons на сайте GitHub.
 
 ## Сборка Docker-образа
 
-Чтобы собрать Docker-образ, выполните следующую команду в терминале:
+Чтобы собрать Docker-образ, выполните следующую команду в терминале (вы можете поменять название вашего контэйнера, при запуске этой команды в диретории вашего контэйнера должен быть референсный геном и скрипт):
 
 ```bash
-docker build -t my-bioinformatics-image -f Dockerfile.ubuntu .
+docker build -t snp-converter -f /*ваша директория*/Dockerfile.ubuntu /*ваша директория*/
 ```
 
 ## Запуск Docker-контейнера
 
-Чтобы запустить контейнер в интерактивном режиме, выполните следующую команду:
+Чтобы запустить контейнер и скрипт, выполните команду:
 
 ```bash
-docker run -it --rm my-bioinformatics-image
+docker run \
+    -v /*ваша директория*/FP_SNPs_10k_GB38_twoAllelsFormat.tsv:/app/FP_SNPs_10k_GB38_twoAllelsFormat.tsv \
+    snp-converter \
+    python3 /app/convert_to_ref_alt.py \
+    -i /app/FP_SNPs_10k_GB38_twoAllelsFormat.tsv \
+    -o /app/FP_SNPs_10k_GB38_REF_ALT.tsv \
+    -r /app/ref/GRCh38.d1.vd1_mainChr/sepChrs/ \
 ```
