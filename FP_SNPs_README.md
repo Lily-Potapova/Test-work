@@ -18,7 +18,7 @@
 
 ## Сборка Docker-образа
 
-Чтобы собрать Docker-образ, выполните следующую команду в терминале (вы можете поменять название вашего контэйнера, при запуске этой команды в диретории вашего контэйнера должен быть референсный геном и скрипт):
+Чтобы собрать Docker-образ, выполните следующую команду в терминале (вы можете поменять название вашего образа, при запуске этой команды в диретории вашего контэйнера должен быть референсный геном и скрипт):
 
 ```bash
 docker build -t snp-converter -f /*ваша директория*/Dockerfile.ubuntu /*ваша директория*/
@@ -26,14 +26,14 @@ docker build -t snp-converter -f /*ваша директория*/Dockerfile.ubu
 
 ## Запуск Docker-контейнера
 
-Чтобы запустить контейнер и скрипт, выполните команду:
+Чтобы запустить контейнер и скрипт, выполните команду (не забудьте поменять название образа, если сдели это ранее):
 
 ```bash
-docker run \
-    -v /*ваша директория*/FP_SNPs_10k_GB38_twoAllelsFormat.tsv:/app/FP_SNPs_10k_GB38_twoAllelsFormat.tsv \
-    snp-converter \
-    python3 /app/convert_to_ref_alt.py \
-    -i /app/FP_SNPs_10k_GB38_twoAllelsFormat.tsv \
-    -o /app/FP_SNPs_10k_GB38_REF_ALT.tsv \
-    -r /app/ref/GRCh38.d1.vd1_mainChr/sepChrs/ \
+docker run -v /*ваша директория*/FP_SNPs_10k_GB38_twoAllelsFormat.tsv:/app/FP_SNPs_10k_GB38_twoAllelsFormat.tsv \
+           -v /*ваша директория*:/app/out \
+           snp-converter \
+           python3 /app/convert_to_ref_alt.py \
+           -i /app/FP_SNPs_10k_GB38_twoAllelsFormat.tsv \
+           -o /app/out/FP_SNPs_10k_GB38_REF_ALT.tsv \
+           -r /app/ref/GRCh38.d1.vd1_mainChr/sepChrs/
 ```
