@@ -14,7 +14,11 @@
 
 ## Предподготовка файла
 
-Для предподготовки был создан yml файл, который можно запустить с помощью вкладки Acshons на сайте GitHub.
+Для предподготовки был создан yml файл, который можно запустить с помощью вкладки Acshons на сайте GitHub или использовать команду:
+
+```bash
+awk 'BEGIN { FS="[ \t]+"; print "#CHROM\tPOS\tID\tallele1\tallele2"; } { if ($1 ~ /^rs#/) next; if ($2 == 23) next; chrom = "chr" $2; id = "rs" $1; pos = $4; print chrom "\t" pos "\t" id "\t" $5 "\t" $6; }' FP_SNPs.txt > FP_SNPs_10k_GB38_twoAllelsFormat.tsv
+```
 
 ## Сборка Docker-образа
 
